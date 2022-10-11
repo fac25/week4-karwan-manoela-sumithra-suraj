@@ -6,5 +6,10 @@
     "express": "^4.18.2",
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1"
+  },
+  "scripts": {
+    "start": "DB_FILE:db.sqlite COOKIE_SECRET=abc nodemon src/index.js",
+    "dev": "DB_FILE:db.sqlite COOKIE_SECRET=abc nodemon src/index.js",
+    "seed": "DB_FILE:db.sqlite node src/database/seed.js"
   }
 }

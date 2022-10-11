@@ -20,8 +20,10 @@ const deleteitem = require("./routes/delete");
 server.use(cookies);
 server.use(staticHandler);
 
-// Route Handlers
+// Routes
 server.get("/", home.get);
+server.get("/sign-up", signup.get);
+
 
 // Export
 module.exports = server;

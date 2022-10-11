@@ -14,7 +14,7 @@ function signUpHtml () {
     </form>
     </div>
     `
-    return {title, content}
+    return Layout({title, content})
 }
 
 function Layout({ title, content }) {
@@ -34,4 +34,4 @@ function Layout({ title, content }) {
     `;
   }
 
-  module.exports = {Layout, signUpHtml}
+  module.exports = { signUpHtml}

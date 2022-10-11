@@ -22,6 +22,7 @@ server.use(staticHandler);
 
 // Routes
 // server.get("/", home.get);
+server.get("/sign-up", signup.get)
 
 // Export
 module.exports = server;

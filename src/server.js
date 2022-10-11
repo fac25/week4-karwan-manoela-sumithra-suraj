@@ -23,6 +23,9 @@ server.use(staticHandler);
 // Routes
 server.get("/", home.get);
 server.get("/sign-up", signup.get);
+server.get("/log-in", login.get);
+server.post("/log-in", body, login.post)
+
 
 
 // Export

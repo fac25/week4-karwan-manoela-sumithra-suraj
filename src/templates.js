@@ -6,9 +6,11 @@ function signUpHtml () {
     <div class="form_container">
     <h1>${title}</h1>
     <form method="POST">
-        <label for="email">Your email</label>
+    <label for="username">Username: </label>
+        <input id="username" name="username" type="text">
+        <label for="email">Email: </label>
         <input id="email" name="email" type="email">
-        <label for="password">Your password</label>
+        <label for="password">Password:</label>
         <input id="password" name="password" type="password">
         <button type="submit">Signup</button>
     </form>

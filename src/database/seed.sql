@@ -8,8 +8,8 @@ INSERT INTO users VALUES
 ON CONFLICT DO NOTHING;
 
 INSERT INTO howdies VALUES 
-(1, 'How to fix bike', 'Go to Halfords', '../public/images/fixbike.jpg', 1, '2022-10-12'),
-(2, 'How to sew a button', 'Use needle & thread', '../public/images/sewbutton.jpg', 3, '2022-10-11')
+(1, 'How to fix bike', 'Go to Halfords', '../images/fixbike.jpg', 1, '2022-10-12'),
+(2, 'How to sew a button', 'Use needle & thread', '../images/sewbutton.jpg', 3, '2022-10-11')
 ON CONFLICT DO NOTHING;
 
 COMMIT;

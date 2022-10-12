@@ -11,7 +11,7 @@
     "start": "nodemon src/index.js",
     "dev": "DB_FILE=db.sqlite COOKIE_SECRET=abc nodemon src/index.js",
     "devWindow": "SET DB_FILE=db.sqlite & SET COOKIE_SECRET=abc & nodemon src/index.js",
-    "seed": "DB_FILE = db.sqlite node src/database/seed.js",
+    "seed": "DB_FILE=db.sqlite node src/database/seed.js",
     "seedWindow": "SET DB_FILE=db.sqlite & node src/database/seed.js"
   }
 }

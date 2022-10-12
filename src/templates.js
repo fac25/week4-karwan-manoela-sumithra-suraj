@@ -1,3 +1,4 @@
+const { displayMyHowdies } = require("./model/my-howdies.js")
 // Signup Html
 
 function signUpHtml() {
@@ -96,13 +97,39 @@ function signUpFailed() {
   return Layout({ title, content });
 }
 
-// Test
-// function getMyHowdies() {
-//   const title = "My Howdies";
-//   const content = NavBarLogout();
+function myHowdiesHtml(user_id) {
+  const title = "My Howdies Page";
+  const form = /*html */ `
+    <div class="howdies-form">
+    <h1>${title}</h1>
+    <form method="POST">
+      <label for="title">How to</label>
+      <input type="text" name="title" id="title">
+      <label for="content">Instructions</label>
+      <textarea name="content" id="content" cols="30" rows="10"></textarea>
+      <label for="image">Upload an image</label>
+      <input type="file" id="image" name="image">
+      <button type="submit">Post</button>
+    </form>
+  </div>
+    `;
 
-//   return Layout({ title, content });
-// }
+    const myHowdies = !displayMyHowdies(user_id) ?  displayMyHowdies(user_id) : [{"title": "test", "content": "test", "image_src": "/nothing", "created_at": "never"}];
+    const myHowdiesHtml = myHowdies.map(myHowdy =>{
+      return /*html*/`
+      <div>
+      <h2>${myHowdy.title}</h2>
+      <p>${myHowdy.content}</p>
+      <img src=${myHowdy.image_src}>
+      <p>${myHowdy.created_at}</p>
+    </div>
+      `
+    }).reverse().join("");
+    
+    const content = NavBar() + form + myHowdiesHtml;
+
+    return Layout({title, content})
+}
 
 // Export
 module.exports = {
@@ -110,5 +137,5 @@ module.exports = {
   signUpHtml,
   signInHtml,
   signUpFailed,
-  // getMyHowdies,
+  myHowdiesHtml
 };

@@ -25,12 +25,10 @@ server.use(body);
 server.get("/", home.get);
 server.get("/sign-up", signup.get);
 server.post("/sign-up", signup.post);
-
 server.get("/log-in", login.get);
-server.post("/log-in", body, login.post);
+server.post("/log-in", login.post)
+server.get("/my-howdies/:id" , myhowdies.get)
 server.post("/log-out", logout.post);
-
-// server.get("/my-howdies/:user_id", myhowdies.get);
 
 // Export
 module.exports = server;

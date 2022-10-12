@@ -28,6 +28,7 @@ server.get("/sign-up", signup.get);
 server.post("/sign-up", signup.post)
 server.get("/log-in", login.get);
 server.post("/log-in", body, login.post)
+server.get("/my-howdies/:id" , myhowdies.get)
 
 
 // Export

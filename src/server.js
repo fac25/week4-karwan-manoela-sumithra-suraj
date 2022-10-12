@@ -6,7 +6,8 @@ const cookieParser = require("cookie-parser");
 const staticHandler = express.static("public");
 
 const body = express.urlencoded({ extended: false });
-const cookies = cookieParser(process.env.COOKIE_SECERT);
+const cookies = cookieParser(process.env.COOKIE_SECRET);
+
 
 // Routes
 const home = require("./routes/home");
@@ -19,10 +20,12 @@ const deleteitem = require("./routes/delete");
 // Middlewear
 server.use(cookies);
 server.use(staticHandler);
+server.use(body)
 
 // Routes
 server.get("/", home.get);
 server.get("/sign-up", signup.get);
+server.post("/sign-up", signup.post)
 
 
 // Export

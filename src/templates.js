@@ -47,6 +47,15 @@ function NavBar() {
     `;
 }
 
+function NavBarLogout() {
+  return /*html*/ `
+    <h1>My Howdies</h1>
+    <nav>
+    <form method='POST' action="/log-out"><button>Log out</button></form>
+    </nav>
+    `;
+}
+
 function HomePage() {
   const title = "Howdie";
   const posts = /*html*/ `
@@ -122,10 +131,11 @@ function myHowdiesHtml(user_id) {
     return Layout({title, content})
 }
 
+// Export
 module.exports = {
   HomePage,
   signUpHtml,
   signInHtml,
   signUpFailed,
-  myHowdiesHtml,
+  myHowdiesHtml
 };

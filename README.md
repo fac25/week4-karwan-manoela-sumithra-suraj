@@ -1,6 +1,8 @@
 # Howdie
 week4-karwan-manoela-sumithra-suraj
 
+Live page hosted on [Heroku](https://howdies.herokuapp.com/)
+
 
 # Role
 Scrum facilitator - Sumithra

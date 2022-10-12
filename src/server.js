@@ -1,5 +1,10 @@
 const express = require("express");
+const multer  = require('multer')
+const upload = multer({ dest: './public/images/' })
+
+
 const server = express();
+
 
 const cookieParser = require("cookie-parser");
 
@@ -28,6 +33,7 @@ server.post("/sign-up", signup.post);
 server.get("/log-in", login.get);
 server.post("/log-in", login.post)
 server.get("/my-howdies/:id" , myhowdies.get)
+server.post("/my-howdies/:id", upload.single("image"), myhowdies.post)
 server.post("/log-out", logout.post);
 
 // Export

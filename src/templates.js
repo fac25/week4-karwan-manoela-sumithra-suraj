@@ -116,7 +116,7 @@ function myHowdiesHtml(user_id) {
   const form = /*html */ `
     <div class="howdies-form">
     <h1>${title}</h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <label for="title">How to</label>
       <input type="text" name="title" id="title">
       <label for="content">Instructions</label>

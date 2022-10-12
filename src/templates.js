@@ -31,31 +31,50 @@ function Layout({ title, content }) {
           <title>${title}</title>
         </head>
         <body>
-        <div>${content}</div>
+        <div>
+        ${NavBar()}
+        ${content}
+        </div>
         </body>
       </html>
     `;
 }
 
 //TODO NavBar to display correct button navigation to other pages
-function NavBar() {
-  return /*html*/ `
-    <h1>Howdie</h1>
-    <nav>
-        <a href="/log-in">Sign In</a>
-        <a href="/sign-up">Sign Up</a>
-    </nav>
-    `;
+function NavBar(checkUser) {
+  const logedIn = /*html*/ `
+  <h1>Howdie</h1>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/my-howdies/:id">Profile</a></li>
+      <li><form method='POST' action="/log-out"><button>Log out</button></form></li>
+    </ul>
+  </nav>
+  `;
+
+  const logedOut = /*html*/ `
+  <h1>Howdie</h1>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/sign-up">Sign Up</a></li>
+      <li><a href="/log-in">Log In</a></li>
+    </ul>
+  </nav>
+  `;
+
+  return checkUser ? logedIn : logedOut;
 }
 
-function NavBarLogout() {
-  return /*html*/ `
-    <h1>My Howdies</h1>
-    <nav>
-    <form method='POST' action="/log-out"><button>Log out</button></form>
-    </nav>
-    `;
-}
+// function NavBarLogout() {
+//   return /*html*/ `
+//     <h1>My Howdies</h1>
+//     <nav>
+//     <form method='POST' action="/log-out"><button>Log out</button></form>
+//     </nav>
+//     `;
+// }
 
 function HomePage() {
   const howdies = displayHowdies();
@@ -75,7 +94,7 @@ function HomePage() {
     .reverse()
     .join("");
 
-  const content = NavBar() + posts;
+  const content = posts;
 
   return Layout({ title, content });
 }
@@ -95,7 +114,7 @@ function signInHtml() {
         <button type="submit">Login</button>
     </form>
     </div>`;
-  const content = NavBar() + form;
+  const content = form;
   return Layout({ title, content });
 }
 
@@ -107,7 +126,7 @@ function signUpFailed() {
      or 
      <a href="/log-in">log in</a>
      </p>`;
-  const content = NavBar() + form;
+  const content = form;
   return Layout({ title, content });
 }
 
@@ -152,7 +171,7 @@ function myHowdiesHtml(user_id) {
     .reverse()
     .join("");
 
-  const content = NavBar() + form + myHowdiesHtml;
+  const content = form + myHowdiesHtml;
 
   return Layout({ title, content });
 }
@@ -164,4 +183,5 @@ module.exports = {
   signInHtml,
   signUpFailed,
   myHowdiesHtml,
+  NavBar,
 };

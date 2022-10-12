@@ -41,7 +41,7 @@ function NavBar() {
   return /*html*/ `
     <h1>Howdie</h1>
     <nav>
-        <a href="/login">Sign In</a>
+        <a href="/log-in">Sign In</a>
         <a href="/sign-up">Sign Up</a>
     </nav>
     `;

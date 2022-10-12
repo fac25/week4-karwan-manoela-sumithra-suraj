@@ -1,4 +1,5 @@
-const { displayMyHowdies } = require("./model/my-howdies.js")
+const { displayMyHowdies } = require("./model/my-howdies.js");
+const { displayHowdies } = require("./model/howdies.js");
 // Signup Html
 
 function signUpHtml() {
@@ -57,10 +58,23 @@ function NavBarLogout() {
 }
 
 function HomePage() {
-  const title = "Howdie";
-  const posts = /*html*/ `
-  <div>User Content</div>
-  `;
+  const howdies = displayHowdies();
+
+  const title = "Howdies";
+  const posts = howdies
+    .map((howdie) => {
+      return /*html*/ `
+    <div class="display-howdie">
+      <h3>${howdie.username}</h3>
+      <p>${howdie.title}</p>
+      <p>${howdie.content}</p>
+      <img src="${howdie.image_src}" >
+    </div>
+    `;
+    })
+    .reverse()
+    .join("");
+
   const content = NavBar() + posts;
 
   return Layout({ title, content });
@@ -114,21 +128,33 @@ function myHowdiesHtml(user_id) {
   </div>
     `;
 
-    const myHowdies = displayMyHowdies(user_id) ?  displayMyHowdies(user_id) : [{"title": "test", "content": "test", "image_src": "/nothing", "created_at": "never"}];
-    const myHowdiesHtml = myHowdies.map(myHowdy =>{
-      return /*html*/`
+  const myHowdies = displayMyHowdies(user_id)
+    ? displayMyHowdies(user_id)
+    : [
+        {
+          title: "test",
+          content: "test",
+          image_src: "/nothing",
+          created_at: "never",
+        },
+      ];
+  const myHowdiesHtml = myHowdies
+    .map((myHowdy) => {
+      return /*html*/ `
       <div>
       <h2>${myHowdy.title}</h2>
       <p>${myHowdy.content}</p>
       <img src="${myHowdy.image_src}">
       <p>${myHowdy.created_at}</p>
     </div>
-      `
-    }).reverse().join("");
-    
-    const content = NavBar() + form + myHowdiesHtml;
+      `;
+    })
+    .reverse()
+    .join("");
 
-    return Layout({title, content})
+  const content = NavBar() + form + myHowdiesHtml;
+
+  return Layout({ title, content });
 }
 
 // Export
@@ -137,5 +163,5 @@ module.exports = {
   signUpHtml,
   signInHtml,
   signUpFailed,
-  myHowdiesHtml
+  myHowdiesHtml,
 };

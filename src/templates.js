@@ -114,13 +114,13 @@ function myHowdiesHtml(user_id) {
   </div>
     `;
 
-    const myHowdies = !displayMyHowdies(user_id) ?  displayMyHowdies(user_id) : [{"title": "test", "content": "test", "image_src": "/nothing", "created_at": "never"}];
+    const myHowdies = displayMyHowdies(user_id) ?  displayMyHowdies(user_id) : [{"title": "test", "content": "test", "image_src": "/nothing", "created_at": "never"}];
     const myHowdiesHtml = myHowdies.map(myHowdy =>{
       return /*html*/`
       <div>
       <h2>${myHowdy.title}</h2>
       <p>${myHowdy.content}</p>
-      <img src=${myHowdy.image_src}>
+      <img src="${myHowdy.image_src}">
       <p>${myHowdy.created_at}</p>
     </div>
       `

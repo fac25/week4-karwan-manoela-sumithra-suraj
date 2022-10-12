@@ -1,8 +1,8 @@
 // Signup Html
 
-function signUpHtml () {
-    const title = "Sign up to Howdie"
-    content = /*html*/`
+function signUpHtml() {
+  const title = "Sign up to Howdie";
+  content = /*html*/ `
     <div class="form_container">
     <h1>${title}</h1>
     <form method="POST">
@@ -15,10 +15,9 @@ function signUpHtml () {
         <button type="submit">Signup</button>
     </form>
     </div>
-    `
-    return Layout({title, content})
+    `;
+  return Layout({ title, content });
 }
-
 
 function Layout({ title, content }) {
   return /*html*/ `
@@ -34,15 +33,24 @@ function Layout({ title, content }) {
         </body>
       </html>
     `;
-  }
+}
 
-//TODO NavBar to display correct button navigation to other pages 
+//TODO NavBar to display correct button navigation to other pages
 function NavBar() {
   return /*html*/ `
     <h1>Howdie</h1>
     <nav>
         <a href="/log-in">Sign In</a>
         <a href="/sign-up">Sign Up</a>
+    </nav>
+    `;
+}
+
+function NavBarLogout() {
+  return /*html*/ `
+    <h1>My Howdies</h1>
+    <nav>
+    <form method='POST' action="/log-out"><button>Log out</button></form>
     </nav>
     `;
 }
@@ -60,8 +68,8 @@ function HomePage() {
 // Sign in Html
 
 function signInHtml() {
-    const title = "Sign In";
-    const form = /* */ `
+  const title = "Sign In";
+  const form = /* */ `
     <div class="form_container">
     <h1>${title}</h1>
     <form method="POST">
@@ -72,20 +80,35 @@ function signInHtml() {
         <button type="submit">Login</button>
     </form>
     </div>`;
-    const content = NavBar() + form;
-    return Layout({title, content});
+  const content = NavBar() + form;
+  return Layout({ title, content });
 }
 
 function signUpFailed() {
-    const title = "Login failed"
-    const form = `
+  const title = "Login failed";
+  const form = `
     <p>Please 
     <a href="/sign-up">sign up</a>
      or 
      <a href="/log-in">log in</a>
      </p>`;
-    const content =  NavBar() + form;
-     return Layout({title, content})
+  const content = NavBar() + form;
+  return Layout({ title, content });
 }
 
-module.exports = { HomePage, signUpHtml, signInHtml, signUpFailed };
+// Test
+// function getMyHowdies() {
+//   const title = "My Howdies";
+//   const content = NavBarLogout();
+
+//   return Layout({ title, content });
+// }
+
+// Export
+module.exports = {
+  HomePage,
+  signUpHtml,
+  signInHtml,
+  signUpFailed,
+  // getMyHowdies,
+};

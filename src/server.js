@@ -26,6 +26,8 @@ server.use(body)
 server.get("/", home.get);
 server.get("/sign-up", signup.get);
 server.post("/sign-up", signup.post)
+server.get("/log-in", login.get);
+server.post("/log-in", body, login.post)
 
 
 // Export

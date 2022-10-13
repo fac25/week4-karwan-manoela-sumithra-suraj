@@ -11,6 +11,23 @@ function get(req, res) {
 
 function post(req, res) {
     const {email, password} = req.body;
+
+    let error={};
+    let errFlag = false;
+
+    if(!email){
+        error.email = "Please enter your email";
+        errFlag = true;
+    }
+    if(!password){
+        error.password = "Please enter a password"
+        errFlag=true;
+    }
+    
+    if(errFlag){
+        return res.status(400).send(signInHtml(req.session, error));
+    }
+    
     const user = getUserByEmail(email); //returns an user object
     const userId = user?.id ;
     

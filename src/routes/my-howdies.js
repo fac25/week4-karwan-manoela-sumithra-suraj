@@ -15,13 +15,36 @@ function get(req, res){
 }
 
 function post(req, res) {
-    const image = req.file
-    // const img_path = "../images/" + image.path
-    const img_path = image.path.replace("public", "..")
-    const {title, content, } = req.body
+    
+    const {title, content } = req.body
+    const image = req.file // const img_path = "../images/" + image.path
 
-    // TO DO: get user_id from session
-    const user_id = req.params.id
+    const user_id = req.session.user_id;
+
+    let error={};
+    let errFlag = false;
+    if(!title ){
+        error.title = "Please enter the title";
+        errFlag = true;
+    }
+    if(!content){
+        error.content = "Please enter the content";
+        errFlag = true;
+    }
+  
+    if(!image){
+        error.image = "Please upload the image";
+        errFlag = true;
+    }
+    
+    
+    if(errFlag){
+        return res.status(400).send(myHowdiesHtml(user_id, req.session, error));
+    }
+    
+    const img_path = image.path.replace("public", "..")
+
+    
 
     // req.file.mimetype .jpg
     // get user_id

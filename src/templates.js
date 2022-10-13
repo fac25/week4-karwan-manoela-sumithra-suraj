@@ -1,6 +1,40 @@
 const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
 
+// Signup Html
+
+function signUpHtml(session, error={}) {
+  const navBar = NavBar(session)
+  const title = "Sign up to Howdie";
+  content = /*html*/ `
+    <div class="form_container">
+    <h1>${title}</h1>
+    <form method="POST">
+    <label for="username">Username: </label>
+        <input id="username" name="username" type="text">
+        ${validate(error.username)}
+        <label for="email">Email: </label>
+        <input id="email" name="email" type="email">
+        ${validate(error.email)}
+        <label for="password">Password:</label>
+        <input id="password" name="password" type="password">
+        ${validate(error.password)}
+        <button type="submit">Signup</button>
+    </form>
+    </div>
+    `;
+  return Layout({ title, content, navBar});
+}
+
+
+function validate(message) {
+  if (message) {
+    return `<span style="color: red">${message}</span>`;
+  } else {
+    return "";
+  }
+}
+
 function Layout({ title, content, navBar }) {
   return /*html*/ `
       <!doctype html>
@@ -93,35 +127,6 @@ function HomePage(session) {
 
 // Signup Html
 
-function signUpHtml(session) {
-  const navBar = NavBar(session)
-  const title = "Sign up to Howdie";
-  content = /*html*/ `
-    <div class="signup_container">
-    <h2>${title}</h2>
-    <form method="POST">
-    <div>
-    <label for="username">Username: </label>
-    
-        <input id="username" name="username" type="text">
-        </div>
-        <div>
-        <label for="email">Email: </label>
-        <input id="email" name="email" type="email">
-        </div>
-        <div>
-        <label for="password">Password:</label>
-        <input id="password" name="password" type="password">
-        </div>
-        <div class="signup-btn">
-          <button type="submit">Signup</button>
-        </div>
-    </form>
-    </div>
-    `;
-  return Layout({ title, content, navBar});
-}
-
 
 
 // function NavBarLogout() {
@@ -137,7 +142,7 @@ function signUpHtml(session) {
 
 // Sign in Html
 
-function signInHtml(session) {
+function signInHtml(session, error={}) {
   const navBar = NavBar(session)
   const title = "Sign In";
   const form = /*html */ `
@@ -147,6 +152,12 @@ function signInHtml(session) {
         <div>
         <label for="email">Your email</label>
         <input id="email" name="email" type="email">
+        ${validate(error.email)}
+        </div>
+        <div>
+        <label for="password">Your password</label>
+        <input id="password" name="password" type="password">
+        ${validate(error.password)}
         </div>
         <div>
         <label for="password">Your password</label>
@@ -177,8 +188,9 @@ function sanitise(input) {
   return input.replaceAll("<", "&lt")
 }
 
-function myHowdiesHtml(user_id, session) {
-  const navBar = NavBar(session)
+function myHowdiesHtml(user_id, session, error={}) {
+  const navBar = NavBar(session);
+
   const title = "My Howdies Page";
   const form = /*html */ `
     <div class="myhowdies-form">
@@ -187,6 +199,13 @@ function myHowdiesHtml(user_id, session) {
     <div>
       <label for="title">How to</label>
       <input type="text" name="title" id="title">
+      ${validate(error.title)}
+      <label for="content">Instructions</label>
+      <textarea name="content" id="content" cols="30" rows="10"></textarea>
+      ${validate(error.content)}
+      <label for="image">Upload an image</label>
+      <input type="file" id="image" name="image">
+      ${validate(error.image)}
     </div>
 
     <div class="text-area">

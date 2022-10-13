@@ -1,6 +1,5 @@
-const {myHowdiesHtml, signUpFailed} = require('../templates')
+const {myHowdiesHtml, signUpFailed, sanitise} = require('../templates')
 const { insertHowdie } = require("../model/my-howdies");
-const { getUserByEmail } = require('../model/users');
 
 function get(req, res){
     const session = req.session;
@@ -26,7 +25,7 @@ function post(req, res) {
 
     // req.file.mimetype .jpg
     // get user_id
-    const date = insertHowdie(title, content, img_path, user_id).created_at;
+    const date = insertHowdie(sanitise(title), sanitise(content), img_path, user_id).created_at;
     res.redirect(`/my-howdies/${user_id}`)
 }
 

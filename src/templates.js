@@ -1,5 +1,6 @@
 const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
+
 // Signup Html
 
 function signUpHtml(session, error={}) {
@@ -25,6 +26,7 @@ function signUpHtml(session, error={}) {
   return Layout({ title, content, navBar});
 }
 
+
 function validate(message) {
   if (message) {
     return `<span style="color: red">${message}</span>`;
@@ -38,19 +40,24 @@ function Layout({ title, content, navBar }) {
       <!doctype html>
       <html lang="en">
         <head>
-        <link rel ="stylesheet" href ="../style.css">
+        <link rel ="stylesheet" href="../styles.css">
           <meta charset="UTF-8">
           <title>${title}</title>
         </head>
         <body>
-        <div>
+        <header>
         ${navBar}
+        </header>
+        <main>
         ${content}
-        </div>
+        </main>
+        ${Footer()}
         </body>
       </html>
     `;
 }
+
+
 
 //TODO NavBar to display correct button navigation to other pages
 function NavBar(session) {
@@ -59,9 +66,12 @@ function NavBar(session) {
   <h1>Howdie</h1>
   <nav>
     <ul>
+    <div class="left-loggedin">
       <li><a href="/">Home</a></li>
-      <li><a href="/my-howdies/${userId}">Profile</a></li>
-      <li><form method='POST' action="/log-out"><button>Log out</button></form></li>
+      <li><a href="/my-howdies/:id">Profile</a></li>
+      </div>
+      <li class="right-loggedin"><form method='POST' action="/log-out"><button>Log out</button></form></li>
+
     </ul>
   </nav>
   `;
@@ -70,15 +80,54 @@ function NavBar(session) {
   <h1>Howdie</h1>
   <nav>
     <ul>
-      <li><a href="/">Home</a></li>
+      <li class="left-loggedout"><a href="/">Home</a></li>
+  
+      <div class="right-loggedout">
       <li><a href="/sign-up">Sign Up</a></li>
       <li><a href="/log-in">Log In</a></li>
+      </div>
     </ul>
   </nav>
   `;
 
   return session ? loggedIn : loggedOut;
 }
+
+function HomePage(session) {
+  const navBar = NavBar(session);
+  const howdies = displayHowdies();
+
+  const title = "Howdies";
+  const posts = /*html*/`
+  <div class="home-container">${
+  howdies
+    .map((howdie) => {
+      return /*html*/ `
+    <div class="card">
+      
+      <h3 class="title">${howdie.title}</h3>
+      
+      <img src="${howdie.image_src}" >
+      <h4>${howdie.username}</h4>
+      <p class="content">${howdie.content}</p>
+    </div>
+    `;
+    })
+    .reverse()
+    .join("")
+  }
+    </div>
+  `
+
+  const content = posts;
+
+  return Layout({ title, content, navBar });
+}
+
+
+// Signup Html
+
+
 
 // function NavBarLogout() {
 //   return /*html*/ `
@@ -89,51 +138,40 @@ function NavBar(session) {
 //     `;
 // }
 
-function HomePage(session) {
-  const navBar = NavBar(session);
-  const howdies = displayHowdies();
 
-  const title = "Howdies";
-  const posts = howdies
-    .map((howdie) => {
-      return /*html*/ `
-    <div class="display-howdie">
-      <h3>${howdie.username}</h3>
-      <p>${howdie.title}</p>
-      <p>${howdie.content}</p>
-      <img src="${howdie.image_src}" >
-    </div>
-    `;
-    })
-    .reverse()
-    .join("");
-
-  const content = posts;
-
-  return Layout({ title, content, navBar });
-}
 
 // Sign in Html
 
 function signInHtml(session, error={}) {
   const navBar = NavBar(session)
   const title = "Sign In";
-  const form = /* */ `
-    <div class="form_container">
-    <h1>${title}</h1>
+  const form = /*html */ `
+    <div class="signin-container">
+    <h2>${title}</h2>
     <form method="POST">
+        <div>
         <label for="email">Your email</label>
         <input id="email" name="email" type="email">
         ${validate(error.email)}
+        </div>
+        <div>
         <label for="password">Your password</label>
         <input id="password" name="password" type="password">
         ${validate(error.password)}
+        </div>
+        <div>
+        <label for="password">Your password</label>
+        <input id="password" name="password" type="password">
+        </div>
+        <div class="signin-btn">
         <button type="submit">Login</button>
+        </div>
     </form>
     </div>`;
   const content = form;
   return Layout({ title, content, navBar });
 }
+
 
 function signUpFailed(title) {
   const content = `
@@ -152,11 +190,13 @@ function sanitise(input) {
 
 function myHowdiesHtml(user_id, session, error={}) {
   const navBar = NavBar(session);
+
   const title = "My Howdies Page";
   const form = /*html */ `
-    <div class="howdies-form">
-    <h1>${title}</h1>
+    <div class="myhowdies-form">
+    <h2>${title}</h2>
     <form method="POST" enctype="multipart/form-data">
+    <div>
       <label for="title">How to</label>
       <input type="text" name="title" id="title">
       ${validate(error.title)}
@@ -166,7 +206,22 @@ function myHowdiesHtml(user_id, session, error={}) {
       <label for="image">Upload an image</label>
       <input type="file" id="image" name="image">
       ${validate(error.image)}
+    </div>
+
+    <div class="text-area">
+      <label for="content">Instructions</label>
+      <textarea name="content" id="content" cols="30" 
+      rows="10"></textarea>
+    </div>
+
+    <div>
+      <label for="image">Upload an image</label>
+      <input type="file" id="image" name="image">
+    </div>
+
+    <div class="post-btn">
       <button type="submit">Post</button>
+    </div>
     </form>
   </div>
     `;
@@ -181,23 +236,36 @@ function myHowdiesHtml(user_id, session, error={}) {
           created_at: "never",
         },
       ];
-  const myHowdiesHtml = myHowdies
-    .map((myHowdy) => {
+  const myHowdiesHtml = /*html*/
+  `<div class="myhowdy-container">${
+  myHowdies
+    .map((myhowdy) => {
       return /*html*/ `
-      <div>
-      <h2>${myHowdy.title}</h2>
-      <p>${myHowdy.content}</p>
-      <img src="${myHowdy.image_src}">
-      <p>${myHowdy.created_at}</p>
+      <div class="card">
+      
+      <h3 class="title">${myhowdy.title}</h3>
+      
+      <img src="${myhowdy.image_src}" >
+      <h4>${myhowdy.username}</h4>
+      <p class="content">${myhowdy.content}</p>
     </div>
-      `;
+      `; 
     })
     .reverse()
-    .join("");
+    .join("")
+  }</div>`;
 
   const content = form + myHowdiesHtml;
 
   return Layout({ title, content, navBar });
+}
+
+function Footer(){
+  return /*html*/`
+    <footer>
+    <p>Howdie &#169; 2022</p>
+    </footer>
+  `
 }
 
 // Export
@@ -205,7 +273,7 @@ module.exports = {
   HomePage,
   signUpHtml,
   signInHtml,
-  signUpFailed,
+  // signUpFailed,
   myHowdiesHtml,
   NavBar,
   sanitise

@@ -27,7 +27,7 @@ function Layout({ title, content, navBar }) {
 
 //TODO NavBar to display correct button navigation to other pages
 function NavBar(session) {
-
+  const userId = session?.user_id;
   const loggedIn = /*html*/ `
   <h1>Howdie</h1>
   <nav>
@@ -37,6 +37,7 @@ function NavBar(session) {
       <li><a href="/my-howdies/:id">Profile</a></li>
       </div>
       <li class="right-loggedin"><form method='POST' action="/log-out"><button>Log out</button></form></li>
+
     </ul>
   </nav>
   `;
@@ -160,17 +161,21 @@ function signInHtml(session) {
   return Layout({ title, content, navBar });
 }
 
-// function signUpFailed() {
-//   const title = "Login failed";
-//   const form = `
-//     <p>Please 
-//     <a href="/sign-up">sign up</a>
-//      or 
-//      <a href="/log-in">log in</a>
-//      </p>`;
-//   const content = form;
-//   return Layout({ title, content, navBar });
-// }
+
+function signUpFailed(title) {
+  const content = `
+  <h2>${title}</h2>
+    <p>Please 
+    <a href="/sign-up">sign up</a>
+     or 
+     <a href="/log-in">log in</a>
+     </p>`;
+  return Layout({ title, content, navBar: "" });
+}
+
+function sanitise(input) {
+  return input.replaceAll("<", "&lt")
+}
 
 function myHowdiesHtml(user_id, session) {
   const navBar = NavBar(session)
@@ -252,4 +257,5 @@ module.exports = {
   // signUpFailed,
   myHowdiesHtml,
   NavBar,
+  sanitise
 };

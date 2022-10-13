@@ -1,8 +1,15 @@
-const {myHowdiesHtml} = require('../templates')
-const { insertHowdie } = require("../model/my-howdies")
+const {myHowdiesHtml, signUpFailed, sanitise} = require('../templates')
+const { insertHowdie } = require("../model/my-howdies");
 
 function get(req, res){
     const session = req.session;
+    const user_id = session?.user_id;
+    const currentUser = req.params.id;
+    console.log(currentUser+"," + user_id )
+
+    if(!session || user_id != currentUser ) {
+        return res.status(400).send(signUpFailed("You are not authorised to see this"))
+    }
     const body = myHowdiesHtml(req.params.id, session);
     res.send(body)
 }
@@ -18,7 +25,7 @@ function post(req, res) {
 
     // req.file.mimetype .jpg
     // get user_id
-    const date = insertHowdie(title, content, img_path, user_id).created_at;
+    const date = insertHowdie(sanitise(title), sanitise(content), img_path, user_id).created_at;
     res.redirect(`/my-howdies/${user_id}`)
 }
 

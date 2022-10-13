@@ -274,7 +274,7 @@ module.exports = {
   HomePage,
   signUpHtml,
   signInHtml,
-  // signUpFailed,
+  signUpFailed,
   myHowdiesHtml,
   NavBar,
   sanitise

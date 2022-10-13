@@ -150,7 +150,7 @@ function sanitise(input) {
   return input.replaceAll("<", "&lt")
 }
 
-function myHowdiesHtml(user_id, session) {
+function myHowdiesHtml(user_id, session, error={}) {
   const navBar = NavBar(session);
   const title = "My Howdies Page";
   const form = /*html */ `
@@ -159,10 +159,13 @@ function myHowdiesHtml(user_id, session) {
     <form method="POST" enctype="multipart/form-data">
       <label for="title">How to</label>
       <input type="text" name="title" id="title">
+      ${validate(error.title)}
       <label for="content">Instructions</label>
       <textarea name="content" id="content" cols="30" rows="10"></textarea>
+      ${validate(error.content)}
       <label for="image">Upload an image</label>
       <input type="file" id="image" name="image">
+      ${validate(error.image)}
       <button type="submit">Post</button>
     </form>
   </div>

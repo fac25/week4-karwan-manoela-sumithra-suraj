@@ -133,6 +133,9 @@ function signUpFailed(title) {
   return Layout({ title, content, navBar: "" });
 }
 
+function sanitise(input) {
+  return input.replaceAll("<", "&lt")
+}
 
 function myHowdiesHtml(user_id, session) {
   const navBar = NavBar(session);
@@ -189,4 +192,5 @@ module.exports = {
   signUpFailed,
   myHowdiesHtml,
   NavBar,
+  sanitise
 };

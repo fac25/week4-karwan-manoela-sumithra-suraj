@@ -15,12 +15,12 @@ function post(req, res) {
     const userId = user?.id ;
     
     if (!user) {
-        const body = signUpFailed()
+        const body = signUpFailed("Login failed")
         return res.status(400).send(body);
     }
     // compare hashed password
     bcrypt.compare(password, user.hash).then((match) => {
-        if(!match) return res.status(400).send(signUpFailed());
+        if(!match) return res.status(400).send(signUpFailed("Login failed"));
         createSessionAndCookies(res, userId);
         return res.redirect(`/my-howdies/${userId}`)
     })

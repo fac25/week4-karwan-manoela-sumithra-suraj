@@ -2,7 +2,7 @@ const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
 // Signup Html
 
-function signUpHtml(session) {
+function signUpHtml(session, error={}) {
   const navBar = NavBar(session)
   const title = "Sign up to Howdie";
   content = /*html*/ `
@@ -11,15 +11,26 @@ function signUpHtml(session) {
     <form method="POST">
     <label for="username">Username: </label>
         <input id="username" name="username" type="text">
+        ${validate(error.username)}
         <label for="email">Email: </label>
         <input id="email" name="email" type="email">
+        ${validate(error.email)}
         <label for="password">Password:</label>
         <input id="password" name="password" type="password">
+        ${validate(error.password)}
         <button type="submit">Signup</button>
     </form>
     </div>
     `;
   return Layout({ title, content, navBar});
+}
+
+function validate(message) {
+  if (message) {
+    return `<span style="color: red">${message}</span>`;
+  } else {
+    return "";
+  }
 }
 
 function Layout({ title, content, navBar }) {
@@ -104,7 +115,7 @@ function HomePage(session) {
 
 // Sign in Html
 
-function signInHtml(session) {
+function signInHtml(session, error={}) {
   const navBar = NavBar(session)
   const title = "Sign In";
   const form = /* */ `
@@ -113,8 +124,10 @@ function signInHtml(session) {
     <form method="POST">
         <label for="email">Your email</label>
         <input id="email" name="email" type="email">
+        ${validate(error.email)}
         <label for="password">Your password</label>
         <input id="password" name="password" type="password">
+        ${validate(error.password)}
         <button type="submit">Login</button>
     </form>
     </div>`;

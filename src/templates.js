@@ -204,29 +204,22 @@ function myHowdiesHtml(user_id, session, error={}) {
     <div class="myhowdies-form">
     <h2>${title}</h2>
     <form method="POST" enctype="multipart/form-data">
-    <div>
+      <div>
       <label for="title">How to</label>
       <input type="text" name="title" id="title">
       ${validate(error.title)}
-      <label for="content">Instructions</label>
-      <textarea name="content" id="content" cols="30" rows="10"></textarea>
-      ${validate(error.content)}
+      </div>
+      
+      <div class="text_area">
+        <label for="content">Instructions</label>
+        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+        ${validate(error.content)}
+       </div>
+       <div>
       <label for="image">Upload an image</label>
       <input type="file" id="image" name="image">
       ${validate(error.image)}
     </div>
-
-    <div class="text-area">
-      <label for="content">Instructions</label>
-      <textarea name="content" id="content" cols="30" 
-      rows="10"></textarea>
-    </div>
-
-    <div>
-      <label for="image">Upload an image</label>
-      <input type="file" id="image" name="image">
-    </div>
-
     <div class="post-btn">
       <button type="submit">Post</button>
     </div>

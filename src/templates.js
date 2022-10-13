@@ -7,19 +7,27 @@ function signUpHtml(session, error={}) {
   const navBar = NavBar(session)
   const title = "Sign up to Howdie";
   content = /*html*/ `
-    <div class="form_container">
+    <div class="signup_container">
     <h1>${title}</h1>
     <form method="POST">
+    <div>
     <label for="username">Username: </label>
         <input id="username" name="username" type="text">
         ${validate(error.username)}
+        </div>
+        <div>
         <label for="email">Email: </label>
         <input id="email" name="email" type="email">
         ${validate(error.email)}
+        </div>
+        <div>
         <label for="password">Password:</label>
         <input id="password" name="password" type="password">
         ${validate(error.password)}
+        </div>
+        <div class="signup-btn"> 
         <button type="submit">Signup</button>
+        </div>
     </form>
     </div>
     `;

@@ -49,7 +49,7 @@ function NavBar(session) {
   <nav>
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="/my-howdies/:${userId}">Profile</a></li>
+      <li><a href="/my-howdies/${userId}">Profile</a></li>
       <li><form method='POST' action="/log-out"><button>Log out</button></form></li>
     </ul>
   </nav>

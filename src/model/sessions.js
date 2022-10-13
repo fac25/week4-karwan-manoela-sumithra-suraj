@@ -23,13 +23,13 @@ function removeSession(sid) {
 }
 
 // Gets Sessions
-const get_session_id = db.prepare(/*sql*/ `
-  SELECT id FROM sessions 
+const get_session = db.prepare(/*sql*/ `
+  SELECT * FROM sessions 
   WHERE id = ?
 `);
-function getSessionId(sid) {
-  return get_session_id.get(sid);
+function getSession(sid) {
+  return get_session.get(sid);
 }
 
 // Exports
-module.exports = { createSession, removeSession, getSessionId };
+module.exports = { createSession, removeSession, getSession };

@@ -1,8 +1,16 @@
-const {myHowdiesHtml} = require('../templates')
-const { insertHowdie } = require("../model/my-howdies")
+const {myHowdiesHtml, signUpFailed} = require('../templates')
+const { insertHowdie } = require("../model/my-howdies");
+const { getUserByEmail } = require('../model/users');
 
 function get(req, res){
     const session = req.session;
+    const user_id = session?.user_id;
+    const currentUser = req.params.id;
+    console.log(currentUser+"," + user_id )
+
+    if(!session || user_id != currentUser ) {
+        return res.status(400).send(signUpFailed("You are not authorised to see this"))
+    }
     const body = myHowdiesHtml(req.params.id, session);
     res.send(body)
 }

@@ -8,7 +8,7 @@ function signUpHtml(session, error={}) {
   const title = "Sign up to Howdie";
   content = /*html*/ `
     <div class="signup_container">
-    <h1>${title}</h1>
+    <h2>${title}</h2>
     <form method="POST">
     <div>
     <label for="username">Username: </label>

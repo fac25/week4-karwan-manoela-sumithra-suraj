@@ -3,10 +3,10 @@ Live page hosted on [Heroku](https://howdies.herokuapp.com/)
 
 
 # Role
-Scrum facilitator - Sumithra
-User Experience lead - Suraj
-DevOps - Manoela
-Q&A - Karwan
+Scrum facilitator - Sumithra<br>
+User Experience lead - Suraj<br>
+DevOps - Manoela<br>
+Q&A - Karwan<br>
 
 # Technical criteria 
 - [ ] Express server

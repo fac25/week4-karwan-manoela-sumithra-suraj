@@ -225,7 +225,7 @@ function myHowdiesHtml(user_id, session) {
       <h4>${myhowdy.username}</h4>
       <p class="content">${myhowdy.content}</p>
     </div>
-      `;
+      `; 
     })
     .reverse()
     .join("")

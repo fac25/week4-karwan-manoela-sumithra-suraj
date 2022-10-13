@@ -2,7 +2,8 @@ const {myHowdiesHtml} = require('../templates')
 const { insertHowdie } = require("../model/my-howdies")
 
 function get(req, res){
-    const body = myHowdiesHtml(req.params.id);
+    const session = req.session;
+    const body = myHowdiesHtml(req.params.id, session);
     res.send(body)
 }
 

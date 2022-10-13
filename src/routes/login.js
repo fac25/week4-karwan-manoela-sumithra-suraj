@@ -4,7 +4,8 @@ const {createSessionAndCookies} = require("../model/cookieSession");
 const bcrypt = require("bcryptjs")
 
 function get(req, res) {
-    const body = signInHtml();
+    const session = req.session;
+    const body = signInHtml(session);
     res.send(body);
 }
 

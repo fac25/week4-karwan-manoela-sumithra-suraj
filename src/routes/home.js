@@ -1,7 +1,8 @@
 const { HomePage } = require("../templates");
 
 function get(req, res) {
-  const body = HomePage();
+  const session = req.session;
+  const body = HomePage(session);
   res.send(body);
 }
 

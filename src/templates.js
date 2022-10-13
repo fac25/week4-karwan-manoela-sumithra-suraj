@@ -2,7 +2,8 @@ const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
 // Signup Html
 
-function signUpHtml() {
+function signUpHtml(session) {
+  const navBar = NavBar(session)
   const title = "Sign up to Howdie";
   content = /*html*/ `
     <div class="form_container">
@@ -18,10 +19,10 @@ function signUpHtml() {
     </form>
     </div>
     `;
-  return Layout({ title, content });
+  return Layout({ title, content, navBar});
 }
 
-function Layout({ title, content }) {
+function Layout({ title, content, navBar }) {
   return /*html*/ `
       <!doctype html>
       <html lang="en">
@@ -32,7 +33,7 @@ function Layout({ title, content }) {
         </head>
         <body>
         <div>
-        ${NavBar()}
+        ${navBar}
         ${content}
         </div>
         </body>
@@ -41,8 +42,9 @@ function Layout({ title, content }) {
 }
 
 //TODO NavBar to display correct button navigation to other pages
-function NavBar(checkUser) {
-  const logedIn = /*html*/ `
+function NavBar(session) {
+
+  const loggedIn = /*html*/ `
   <h1>Howdie</h1>
   <nav>
     <ul>
@@ -53,7 +55,7 @@ function NavBar(checkUser) {
   </nav>
   `;
 
-  const logedOut = /*html*/ `
+  const loggedOut = /*html*/ `
   <h1>Howdie</h1>
   <nav>
     <ul>
@@ -64,7 +66,7 @@ function NavBar(checkUser) {
   </nav>
   `;
 
-  return checkUser ? logedIn : logedOut;
+  return session ? loggedIn : loggedOut;
 }
 
 // function NavBarLogout() {
@@ -76,7 +78,8 @@ function NavBar(checkUser) {
 //     `;
 // }
 
-function HomePage() {
+function HomePage(session) {
+  const navBar = NavBar(session);
   const howdies = displayHowdies();
 
   const title = "Howdies";
@@ -96,12 +99,13 @@ function HomePage() {
 
   const content = posts;
 
-  return Layout({ title, content });
+  return Layout({ title, content, navBar });
 }
 
 // Sign in Html
 
-function signInHtml() {
+function signInHtml(session) {
+  const navBar = NavBar(session)
   const title = "Sign In";
   const form = /* */ `
     <div class="form_container">
@@ -115,7 +119,7 @@ function signInHtml() {
     </form>
     </div>`;
   const content = form;
-  return Layout({ title, content });
+  return Layout({ title, content, navBar });
 }
 
 function signUpFailed() {
@@ -127,10 +131,11 @@ function signUpFailed() {
      <a href="/log-in">log in</a>
      </p>`;
   const content = form;
-  return Layout({ title, content });
+  return Layout({ title, content, navBar: "" });
 }
 
-function myHowdiesHtml(user_id) {
+function myHowdiesHtml(user_id, session) {
+  const navBar = NavBar(session);
   const title = "My Howdies Page";
   const form = /*html */ `
     <div class="howdies-form">
@@ -173,7 +178,7 @@ function myHowdiesHtml(user_id) {
 
   const content = form + myHowdiesHtml;
 
-  return Layout({ title, content });
+  return Layout({ title, content, navBar });
 }
 
 // Export

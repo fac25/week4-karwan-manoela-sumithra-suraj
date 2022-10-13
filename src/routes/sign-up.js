@@ -5,7 +5,8 @@ const {createUser, getUserByEmail} = require('../model/users');
 const bcrypt = require('bcryptjs');
 
 function get(req, res) {
-    const body = signUpHtml();
+    const session = req.session;
+    const body = signUpHtml(session);
     res.send(body);
 }
 

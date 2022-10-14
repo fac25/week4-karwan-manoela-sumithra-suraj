@@ -247,7 +247,6 @@ function myHowdiesHtml(user_id, session, error={}) {
       <h3 class="title">${myhowdy.title}</h3>
       
       <img src="${myhowdy.image_src}" >
-      <h4>${myhowdy.username}</h4>
       <p class="content">${myhowdy.content}</p>
     </div>
       `; 

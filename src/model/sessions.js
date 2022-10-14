@@ -24,7 +24,12 @@ function removeSession(sid) {
 
 // Gets Sessions
 const get_session = db.prepare(/*sql*/ `
-  SELECT * FROM sessions 
+  SELECT
+  id,
+  user_id,
+  expires_at,
+  created_at 
+  FROM sessions 
   WHERE id = ?
 `);
 function getSession(sid) {

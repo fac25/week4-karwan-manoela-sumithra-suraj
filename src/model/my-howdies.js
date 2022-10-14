@@ -2,7 +2,13 @@
 const db = require("../database/db")
 
 const get_my_howdies = db.prepare(/*sql*/ `
-SELECT *
+SELECT 
+id,
+title,
+content,
+image_src,
+user_id,
+created_at
 FROM howdies
 WHERE user_id = ?
 `)

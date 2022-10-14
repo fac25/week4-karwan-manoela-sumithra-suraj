@@ -1,5 +1,6 @@
-const {myHowdiesHtml, signUpFailed, sanitise} = require('../templates')
+const {myHowdiesHtml, signUpFailed} = require('../templates')
 const { insertHowdie } = require("../model/my-howdies");
+const { sanitise } = require("../cleaned");
 
 function get(req, res){
     const session = req.session;

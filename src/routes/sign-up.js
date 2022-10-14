@@ -13,15 +13,23 @@ function get(req, res) {
 function post(req,res){
     const {username, email, password} = req.body;
 
+    const formInputs = {
+        username: "",
+        email: "",
+      }
+
+
     let error={};
     let errFlag = false;
     if(!username ){
         error.username = "Please enter your username";
         errFlag = true;
+        formInputs.email = email;
     }
     if(!email){
         error.email = "Please enter your email";
         errFlag = true;
+        formInputs.username = username;
     }
     if(!password){
         error.password = "Please enter a password"
@@ -29,7 +37,7 @@ function post(req,res){
     }
     
     if(errFlag){
-        return res.status(400).send(signUpHtml(req.session, error));
+        return res.status(400).send(signUpHtml(req.session, error, formInputs));
     }
     
     const existingUser = getUserByEmail(email); 

@@ -1,29 +1,31 @@
 const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
 
-// Signup Html
 
-function signUpHtml(session, error={}) {
+// Signup Html
+function signUpHtml(session, error, formInputs) {
   const navBar = NavBar(session)
   const title = "Sign up to Howdie";
+
   content = /*html*/ `
     <div class="signup_container">
     <h2>${title}</h2>
     <form method="POST">
     <div>
     <label for="username">Username: </label>
-        <input id="username" name="username" type="text">
-        ${validate(error.username)}
+        <input id="username" name="username" type="text" value=${formInputs.username}>
+        <p>${validate(error.username)}</p>
+        
         </div>
         <div>
         <label for="email">Email: </label>
-        <input id="email" name="email" type="email">
-        ${validate(error.email)}
+        <input id="email" name="email" type="email" value=${formInputs.email}>
+        <p>${validate(error.email)}</p>
         </div>
         <div>
         <label for="password">Password:</label>
         <input id="password" name="password" type="password">
-        ${validate(error.password)}
+        <p>${validate(error.password)}</p>
         </div>
         <div class="signup-btn"> 
         <button type="submit">Signup</button>
@@ -160,16 +162,12 @@ function signInHtml(session, error={}) {
         <div>
         <label for="email">Your email</label>
         <input id="email" name="email" type="email">
-        ${validate(error.email)}
+        <p>${validate(error.email)}</p>
         </div>
         <div>
         <label for="password">Your password</label>
         <input id="password" name="password" type="password">
-        ${validate(error.password)}
-        </div>
-        <div>
-        <label for="password">Your password</label>
-        <input id="password" name="password" type="password">
+        <p>${validate(error.password)}</p>
         </div>
         <div class="signin-btn">
         <button type="submit">Login</button>

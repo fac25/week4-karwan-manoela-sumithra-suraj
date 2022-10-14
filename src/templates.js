@@ -1,6 +1,30 @@
 const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
 
+
+// Error message object
+const errorMsg = {
+  email : "Please enter your email",
+  password: "Please enter a password",
+  username:"Please enter your username"
+};
+
+
+function checkForErrors(input){
+  
+  let errors = {};
+  const keys = Object.keys(input);
+
+  // iterate over object
+  keys.forEach((key, index) => {
+      if(!input[key]){
+        errors[key] = errorMsg[key];
+      }
+  });
+
+  return errors;
+}
+
 // Signup Html
 
 function signUpHtml(session, error={}) {
@@ -167,10 +191,7 @@ function signInHtml(session, error={}) {
         <input id="password" name="password" type="password">
         ${validate(error.password)}
         </div>
-        <div>
-        <label for="password">Your password</label>
-        <input id="password" name="password" type="password">
-        </div>
+  
         <div class="signin-btn">
         <button type="submit">Login</button>
         </div>
@@ -277,5 +298,6 @@ module.exports = {
   signUpFailed,
   myHowdiesHtml,
   NavBar,
-  sanitise
+  sanitise,
+  checkForErrors
 };

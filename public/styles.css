@@ -55,7 +55,7 @@ nav ul li a:hover, .right-loggedin button:hover{
     width: 80%;
     margin: 50px auto;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 40%;
     gap: 5%;
 }
 

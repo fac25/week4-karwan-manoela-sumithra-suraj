@@ -18,7 +18,6 @@ function post(req,res){
         email: "",
       }
 
-
     let error={};
     let errFlag = false;
     if(!username ){

@@ -1,4 +1,4 @@
-const {signUpHtml, checkForErrors} = require("../templates")
+const {signUpHtml, checkForErrors, signUpFailed} = require("../templates")
 const {createSessionAndCookies} = require("../model/cookieSession");
 const {createUser, getUserByEmail} = require('../model/users');
 
@@ -46,7 +46,10 @@ function post(req,res){
     }
     
     const existingUser = getUserByEmail(email); 
-    if(existingUser) return res.redirect('/login');
+    if(existingUser) {
+        const body = signUpFailed("Email already exist.")
+        return res.status(400).send(body);
+    }
 
     bcrypt.hash(password, 12).then((hashedPwd)=>{
         const user = createUser(username, email,hashedPwd);

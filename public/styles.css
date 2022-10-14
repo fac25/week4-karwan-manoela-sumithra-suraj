@@ -67,6 +67,7 @@ nav ul li a:hover, .right-loggedin button:hover{
 }
 
 .title, .card h4, .content{
+    overflow: hidden;
     padding: 10px;
 }
 

@@ -17,31 +17,21 @@ function post(req,res){
         username: "",
         email: "",
       }
-
-    //let error={};
-    //let errFlag = false;
-    //if(!username ){
-     //   error.username = "Please enter your username";
-      //  errFlag = true;
-       // formInputs.email = email;
-    //}
-    //if(!email){
-     //   error.email = "Please enter your email";
-      //  errFlag = true;
-       // formInputs.username = username;
-    //}
-    //if(!password){
-      //  error.password = "Please enter a password"
-       // errFlag=true;
-    //}
+    if(!username ){
+       formInputs.email = email;
+    }
+    if(!email){
+       formInputs.username = username;
+    }
+    if(!password){
+        formInputs.email = email;
+        formInputs.username = username;
+    }
     
-   // if(errFlag){
-     //   return res.status(400).send(signUpHtml(req.session, error, formInputs));
-
     let errors = checkForErrors({username, email, password});
     
     if((Object.keys(errors).length > 0) ){
-        return res.status(400).send(signUpHtml(req.session, errors));
+        return res.status(400).send(signUpHtml(req.session, errors,formInputs));
 
     }
     

@@ -13,9 +13,16 @@ function post(req, res) {
     const {email, password} = req.body;
 
     let errors = checkForErrors({email, password});
+
+    const formInputs = {
+        email: "",
+      }
+    if(!password ){
+       formInputs.email = email;
+    }
     
     if((Object.keys(errors).length > 0)){
-        return res.status(400).send(signInHtml(req.session, errors));
+        return res.status(400).send(signInHtml(req.session, errors, formInputs));
     }
     
     const user = getUserByEmail(email); //returns an user object

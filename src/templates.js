@@ -1,5 +1,6 @@
 const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
+const { validate, sanitise } = require("./cleaned")
 
 
 // Error message object
@@ -57,15 +58,6 @@ function signUpHtml(session, error={}, formInputs={username:"", email:""}) {
     </div>
     `;
   return Layout({ title, content, navBar});
-}
-
-
-function validate(message) {
-  if (message) {
-    return `<span style="color: red">${message}</span>`;
-  } else {
-    return "";
-  }
 }
 
 function Layout({ title, content, navBar }) {
@@ -143,6 +135,8 @@ function HomePage(session) {
       <img src="${howdie.image_src}" >
       <h4>${howdie.username}</h4>
       <p class="content">${howdie.content}</p>
+      <p class="content">${new Date(howdie.created_at).toLocaleString()}</p>
+
     </div>
     `;
     })
@@ -213,11 +207,8 @@ function signUpFailed(title) {
   return Layout({ title, content, navBar: "" });
 }
 
-function sanitise(input) {
-  return input.replaceAll("<", "&lt")
-}
-
 function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content:""}) {
+
   const navBar = NavBar(session);
 
   const title = "My Howdies Page";
@@ -249,15 +240,6 @@ function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content
     `;
 
   const myHowdies = displayMyHowdies(user_id)
-    ? displayMyHowdies(user_id)
-    : [
-        {
-          title: "test",
-          content: "test",
-          image_src: "/nothing",
-          created_at: "never",
-        },
-      ];
   const myHowdiesHtml = /*html*/
   `<div class="myhowdy-container">${
   myHowdies
@@ -269,6 +251,7 @@ function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content
       
       <img src="${myhowdy.image_src}" >
       <p class="content">${myhowdy.content}</p>
+      <p class="content">${new Date(myhowdy.created_at).toLocaleString()}</p>
     </div>
       `; 
     })
@@ -297,6 +280,5 @@ module.exports = {
   signUpFailed,
   myHowdiesHtml,
   NavBar,
-  sanitise,
   checkForErrors
 };

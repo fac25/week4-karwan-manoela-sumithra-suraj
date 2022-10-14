@@ -1,5 +1,6 @@
 const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
+const { validate, sanitise } = require("./cleaned")
 
 // Signup Html
 
@@ -32,15 +33,6 @@ function signUpHtml(session, error={}) {
     </div>
     `;
   return Layout({ title, content, navBar});
-}
-
-
-function validate(message) {
-  if (message) {
-    return `<span style="color: red">${message}</span>`;
-  } else {
-    return "";
-  }
 }
 
 function Layout({ title, content, navBar }) {
@@ -188,10 +180,6 @@ function signUpFailed(title) {
      <a href="/log-in">log in</a>
      </p>`;
   return Layout({ title, content, navBar: "" });
-}
-
-function sanitise(input) {
-  return input.replaceAll("<", "&lt")
 }
 
 function myHowdiesHtml(user_id, session, error={}) {

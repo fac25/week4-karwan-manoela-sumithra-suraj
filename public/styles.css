@@ -11,6 +11,7 @@
     box-sizing: border-box; 
     list-style-type: none;
     text-decoration: none;
+    color: var(--secondary);
 }
 
 header h1{
@@ -129,6 +130,33 @@ nav ul li a:hover, .right-loggedin button:hover{
 .text-area {
     display: flex;
 }
+
+.failed-attempt{
+    width: 400px;
+    height: 300px;
+    margin:10rem auto;
+    border: 1px solid var(--secondary);
+    border-radius: 5px;
+}
+
+.failed-attempt h2{
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.failed-attempt div{
+    text-align: center;
+}
+
+.failed-attempt div a{
+    padding: 16px 10px;
+    font-weight: bold;
+}
+.failed-attempt div a:hover{
+    color: var(--secondary-text);
+}
+
+
 
 footer{
     width: 80%;

@@ -1,4 +1,4 @@
-const {signUpHtml, checkForErrors, signUpFailed} = require("../templates")
+const {signUpHtml, checkForErrors, failedAttempt} = require("../templates")
 const {createSessionAndCookies} = require("../model/cookieSession");
 const {createUser, getUserByEmail} = require('../model/users');
 
@@ -37,7 +37,7 @@ function post(req,res){
     
     const existingUser = getUserByEmail(email); 
     if(existingUser) {
-        const body = signUpFailed("Email already exist.")
+        const body = failedAttempt("Email already exist.")
         return res.status(400).send(body);
     }
 

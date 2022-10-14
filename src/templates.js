@@ -1,34 +1,35 @@
 const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
-const { validate, sanitise } = require("./cleaned")
-
+const { validate, sanitise } = require("./cleaned");
 
 // Error message object
 const errorMsg = {
-  email : "Please enter your email",
+  email: "Please enter your email",
   password: "Please enter a password",
-  username:"Please enter your username"
+  username: "Please enter your username",
 };
 
-
-function checkForErrors(input){
-  
+function checkForErrors(input) {
   let errors = {};
   const keys = Object.keys(input);
 
   // iterate over object
   keys.forEach((key, index) => {
-      if(!input[key]){
-        errors[key] = errorMsg[key];
-      }
+    if (!input[key]) {
+      errors[key] = errorMsg[key];
+    }
   });
 
   return errors;
 }
 
 // Signup Html
-function signUpHtml(session, error={}, formInputs={username:"", email:""}) {
-  const navBar = NavBar(session)
+function signUpHtml(
+  session,
+  error = {},
+  formInputs = { username: "", email: "" }
+) {
+  const navBar = NavBar(session);
   const title = "Sign up to Howdie";
 
   content = /*html*/ `
@@ -37,7 +38,9 @@ function signUpHtml(session, error={}, formInputs={username:"", email:""}) {
     <form method="POST">
     <div>
     <label for="username">Username: </label>
-        <input id="username" name="username" type="text" value=${formInputs.username}>
+        <input id="username" name="username" type="text" value=${
+          formInputs.username
+        }>
         <p>${validate(error.username)}</p>
         
         </div>
@@ -57,7 +60,7 @@ function signUpHtml(session, error={}, formInputs={username:"", email:""}) {
     </form>
     </div>
     `;
-  return Layout({ title, content, navBar});
+  return Layout({ title, content, navBar });
 }
 
 function Layout({ title, content, navBar }) {
@@ -81,8 +84,6 @@ function Layout({ title, content, navBar }) {
       </html>
     `;
 }
-
-
 
 //TODO NavBar to display correct button navigation to other pages
 function NavBar(session) {
@@ -123,9 +124,8 @@ function HomePage(session) {
   const howdies = displayHowdies();
 
   const title = "Howdies";
-  const posts = /*html*/`
-  <div class="home-container">${
-  howdies
+  const posts = /*html*/ `
+  <div class="home-container">${howdies
     .map((howdie) => {
       return /*html*/ `
     <div class="card">
@@ -141,20 +141,16 @@ function HomePage(session) {
     `;
     })
     .reverse()
-    .join("")
-  }
+    .join("")}
     </div>
-  `
+  `;
 
   const content = posts;
 
   return Layout({ title, content, navBar });
 }
 
-
 // Signup Html
-
-
 
 // function NavBarLogout() {
 //   return /*html*/ `
@@ -165,12 +161,10 @@ function HomePage(session) {
 //     `;
 // }
 
-
-
 // Sign in Html
 
-function signInHtml(session, error={}, formInputs={ email:""}) {
-  const navBar = NavBar(session)
+function signInHtml(session, error = {}, formInputs = { email: "" }) {
+  const navBar = NavBar(session);
   const title = "Sign In";
   const form = /*html */ `
     <div class="signin-container">
@@ -195,20 +189,26 @@ function signInHtml(session, error={}, formInputs={ email:""}) {
   return Layout({ title, content, navBar });
 }
 
+function failedAttempt(title) {
+  const content = /*html */ `
 
-function signUpFailed(title) {
-  const content = `
+  <div class="failed-attempt">
   <h2>${title}</h2>
-    <p>Please 
-    <a href="/sign-up">sign up</a>
+    <div>Please 
+    <a href="/sign-up">SignUp</a>
      or 
-     <a href="/log-in">log in</a>
-     </p>`;
+     <a href="/log-in">LogIn</a>
+     </div>
+     </div>`;
   return Layout({ title, content, navBar: "" });
 }
 
-function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content:""}) {
-
+function myHowdiesHtml(
+  user_id,
+  session,
+  error = {},
+  formInputs = { title: "", content: "" }
+) {
   const navBar = NavBar(session);
 
   const title = "My Howdies Page";
@@ -224,7 +224,9 @@ function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content
       
       <div class="text_area">
         <label for="content">Instructions</label>
-        <textarea name="content" id="content" cols="30" rows="10">${formInputs.content}</textarea>
+        <textarea name="content" id="content" cols="30" rows="10">${
+          formInputs.content
+        }</textarea>
         <p>${validate(error.content)}</p>
        </div>
        <div>
@@ -239,12 +241,12 @@ function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content
   </div>
     `;
 
-  const myHowdies = displayMyHowdies(user_id)
-  const myHowdiesHtml = /*html*/
-  `<div class="myhowdy-container">${
-  myHowdies
-    .map((myhowdy) => {
-      return /*html*/ `
+  const myHowdies = displayMyHowdies(user_id);
+  const myHowdiesHtml =
+    /*html*/
+    `<div class="myhowdy-container">${myHowdies
+      .map((myhowdy) => {
+        return /*html*/ `
       <div class="card">
       
       <h3 class="title">${myhowdy.title}</h3>
@@ -253,23 +255,22 @@ function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content
       <p class="content">${myhowdy.content}</p>
       <p class="content">${new Date(myhowdy.created_at).toLocaleString()}</p>
     </div>
-      `; 
-    })
-    .reverse()
-    .join("")
-  }</div>`;
+      `;
+      })
+      .reverse()
+      .join("")}</div>`;
 
   const content = form + myHowdiesHtml;
 
   return Layout({ title, content, navBar });
 }
 
-function Footer(){
-  return /*html*/`
+function Footer() {
+  return /*html*/ `
     <footer>
     <p>Howdie &#169; 2022</p>
     </footer>
-  `
+  `;
 }
 
 // Export
@@ -277,8 +278,8 @@ module.exports = {
   HomePage,
   signUpHtml,
   signInHtml,
-  signUpFailed,
+  failedAttempt,
   myHowdiesHtml,
   NavBar,
-  checkForErrors
+  checkForErrors,
 };

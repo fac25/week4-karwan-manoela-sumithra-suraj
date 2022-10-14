@@ -1,4 +1,4 @@
-const {signInHtml, signUpFailed, checkForErrors} = require("../templates")
+const {signInHtml, failedAttempt, checkForErrors} = require("../templates")
 const {getUserByEmail} = require("../model/users.js")
 const {createSessionAndCookies} = require("../model/cookieSession");
 const bcrypt = require("bcryptjs")
@@ -29,12 +29,12 @@ function post(req, res) {
     const userId = user?.id ;
     
     if (!user) {
-        const body = signUpFailed("Login failed")
+        const body = failedAttempt("Login failed")
         return res.status(400).send(body);
     }
     // compare hashed password
     bcrypt.compare(password, user.hash).then((match) => {
-        if(!match) return res.status(400).send(signUpFailed("Login failed"));
+        if(!match) return res.status(400).send(failedAttempt("Login failed"));
         createSessionAndCookies(res, userId);
         return res.redirect(`/my-howdies/${userId}`)
     })

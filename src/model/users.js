@@ -2,7 +2,12 @@
 const db = require("../database/db.js")
 
 const get_user_by_email = db.prepare(/*sql*/`
-SELECT *
+SELECT
+id,
+username,
+email,
+hash, --- Do we need this?
+created_at
 FROM users 
 WHERE email = ?
 `)

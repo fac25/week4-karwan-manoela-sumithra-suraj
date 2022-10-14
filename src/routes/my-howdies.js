@@ -1,4 +1,4 @@
-const {myHowdiesHtml, signUpFailed} = require('../templates')
+const {myHowdiesHtml, failedAttempt} = require('../templates')
 const { insertHowdie } = require("../model/my-howdies");
 const { sanitise } = require("../cleaned");
 
@@ -8,7 +8,7 @@ function get(req, res){
     const currentUser = req.params.id;
 
     if(!session || user_id != currentUser ) {
-        return res.status(400).send(signUpFailed("You are not authorised to see this"))
+        return res.status(400).send(failedAttempt("You are not authorised to see this"))
     }
     const body = myHowdiesHtml(req.params.id, session);
     res.send(body)

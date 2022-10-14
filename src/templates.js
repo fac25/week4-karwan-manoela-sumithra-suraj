@@ -76,7 +76,7 @@ function NavBar(session) {
     <ul>
     <div class="left-loggedin">
       <li><a href="/">Home</a></li>
-      <li><a href="/my-howdies/:id">Profile</a></li>
+      <li><a href="/my-howdies/${userId}">Profile</a></li>
       </div>
       <li class="right-loggedin"><form method='POST' action="/log-out"><button>Log out</button></form></li>
 
@@ -247,7 +247,6 @@ function myHowdiesHtml(user_id, session, error={}) {
       <h3 class="title">${myhowdy.title}</h3>
       
       <img src="${myhowdy.image_src}" >
-      <h4>${myhowdy.username}</h4>
       <p class="content">${myhowdy.content}</p>
     </div>
       `; 

@@ -167,10 +167,6 @@ function signInHtml(session, error={}) {
         <input id="password" name="password" type="password">
         ${validate(error.password)}
         </div>
-        <div>
-        <label for="password">Your password</label>
-        <input id="password" name="password" type="password">
-        </div>
         <div class="signin-btn">
         <button type="submit">Login</button>
         </div>

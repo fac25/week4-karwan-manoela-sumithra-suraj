@@ -169,7 +169,7 @@ function HomePage(session) {
 
 // Sign in Html
 
-function signInHtml(session, error={}) {
+function signInHtml(session, error={}, formInputs={ email:""}) {
   const navBar = NavBar(session)
   const title = "Sign In";
   const form = /*html */ `
@@ -178,7 +178,7 @@ function signInHtml(session, error={}) {
     <form method="POST">
         <div>
         <label for="email">Your email</label>
-        <input id="email" name="email" type="email">
+        <input id="email" name="email" type="email" value=${formInputs.email}>
         <p>${validate(error.email)}</p>
         </div>
         <div>

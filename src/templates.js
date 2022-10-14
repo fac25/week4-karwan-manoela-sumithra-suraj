@@ -118,6 +118,8 @@ function HomePage(session) {
       <img src="${howdie.image_src}" >
       <h4>${howdie.username}</h4>
       <p class="content">${howdie.content}</p>
+      <p class="content">${new Date(howdie.created_at).toLocaleString()}</p>
+
     </div>
     `;
     })
@@ -224,15 +226,6 @@ function myHowdiesHtml(user_id, session, error={}) {
     `;
 
   const myHowdies = displayMyHowdies(user_id)
-    ? displayMyHowdies(user_id)
-    : [
-        {
-          title: "test",
-          content: "test",
-          image_src: "/nothing",
-          created_at: "never",
-        },
-      ];
   const myHowdiesHtml = /*html*/
   `<div class="myhowdy-container">${
   myHowdies
@@ -244,6 +237,7 @@ function myHowdiesHtml(user_id, session, error={}) {
       
       <img src="${myhowdy.image_src}" >
       <p class="content">${myhowdy.content}</p>
+      <p class="content">${new Date(myhowdy.created_at).toLocaleString()}</p>
     </div>
       `; 
     })

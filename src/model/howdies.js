@@ -5,7 +5,8 @@ SELECT
 title,
 content,
 image_src,
-user_id, --- Do we need this?
+user_id,
+howdies.created_at,
 users.username AS username
 FROM howdies JOIN users ON howdies.user_id = users.id
 `);

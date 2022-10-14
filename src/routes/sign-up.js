@@ -1,4 +1,4 @@
-const {signUpHtml} = require("../templates")
+const {signUpHtml, checkForErrors} = require("../templates")
 const {createSessionAndCookies} = require("../model/cookieSession");
 const {createUser, getUserByEmail} = require('../model/users');
 
@@ -13,23 +13,10 @@ function get(req, res) {
 function post(req,res){
     const {username, email, password} = req.body;
 
-    let error={};
-    let errFlag = false;
-    if(!username ){
-        error.username = "Please enter your username";
-        errFlag = true;
-    }
-    if(!email){
-        error.email = "Please enter your email";
-        errFlag = true;
-    }
-    if(!password){
-        error.password = "Please enter a password"
-        errFlag=true;
-    }
+    let errors = checkForErrors({username, email, password});
     
-    if(errFlag){
-        return res.status(400).send(signUpHtml(req.session, error));
+    if((Object.keys(errors).length > 0) ){
+        return res.status(400).send(signUpHtml(req.session, errors));
     }
     
     const existingUser = getUserByEmail(email); 

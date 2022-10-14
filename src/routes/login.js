@@ -1,4 +1,4 @@
-const {signInHtml, signUpFailed} = require("../templates")
+const {signInHtml, signUpFailed, checkForErrors} = require("../templates")
 const {getUserByEmail} = require("../model/users.js")
 const {createSessionAndCookies} = require("../model/cookieSession");
 const bcrypt = require("bcryptjs")
@@ -12,20 +12,10 @@ function get(req, res) {
 function post(req, res) {
     const {email, password} = req.body;
 
-    let error={};
-    let errFlag = false;
-
-    if(!email){
-        error.email = "Please enter your email";
-        errFlag = true;
-    }
-    if(!password){
-        error.password = "Please enter a password"
-        errFlag=true;
-    }
+    let errors = checkForErrors({email, password});
     
-    if(errFlag){
-        return res.status(400).send(signInHtml(req.session, error));
+    if((Object.keys(errors).length > 0)){
+        return res.status(400).send(signInHtml(req.session, errors));
     }
     
     const user = getUserByEmail(email); //returns an user object

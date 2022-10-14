@@ -1,4 +1,4 @@
-const {signUpHtml} = require("../templates")
+const {signUpHtml, checkForErrors, signUpFailed} = require("../templates")
 const {createSessionAndCookies} = require("../model/cookieSession");
 const {createUser, getUserByEmail} = require('../model/users');
 
@@ -13,27 +13,43 @@ function get(req, res) {
 function post(req,res){
     const {username, email, password} = req.body;
 
-    let error={};
-    let errFlag = false;
-    if(!username ){
-        error.username = "Please enter your username";
-        errFlag = true;
-    }
-    if(!email){
-        error.email = "Please enter your email";
-        errFlag = true;
-    }
-    if(!password){
-        error.password = "Please enter a password"
-        errFlag=true;
-    }
+    const formInputs = {
+        username: "",
+        email: "",
+      }
+
+    //let error={};
+    //let errFlag = false;
+    //if(!username ){
+     //   error.username = "Please enter your username";
+      //  errFlag = true;
+       // formInputs.email = email;
+    //}
+    //if(!email){
+     //   error.email = "Please enter your email";
+      //  errFlag = true;
+       // formInputs.username = username;
+    //}
+    //if(!password){
+      //  error.password = "Please enter a password"
+       // errFlag=true;
+    //}
     
-    if(errFlag){
-        return res.status(400).send(signUpHtml(req.session, error));
+   // if(errFlag){
+     //   return res.status(400).send(signUpHtml(req.session, error, formInputs));
+
+    let errors = checkForErrors({username, email, password});
+    
+    if((Object.keys(errors).length > 0) ){
+        return res.status(400).send(signUpHtml(req.session, errors));
+
     }
     
     const existingUser = getUserByEmail(email); 
-    if(existingUser) return res.redirect('/login');
+    if(existingUser) {
+        const body = signUpFailed("Email already exist.")
+        return res.status(400).send(body);
+    }
 
     bcrypt.hash(password, 12).then((hashedPwd)=>{
         const user = createUser(username, email,hashedPwd);

@@ -20,15 +20,23 @@ function post(req, res) {
 
     const user_id = req.session.user_id;
 
+
+    const formInputs = {
+        title: "",
+        content: "",
+      }
+
     let error={};
     let errFlag = false;
     if(!title ){
         error.title = "Please enter the title";
         errFlag = true;
+        formInputs.title = title
     }
     if(!content){
         error.content = "Please enter the content";
         errFlag = true;
+        formInputs.content = content
     }
   
     if(!image){
@@ -38,7 +46,7 @@ function post(req, res) {
     
     
     if(errFlag){
-        return res.status(400).send(myHowdiesHtml(user_id, req.session, error));
+        return res.status(400).send(myHowdiesHtml(user_id, req.session, error, formInputs));
     }
     
     const img_path = image.path.replace("public", "..")

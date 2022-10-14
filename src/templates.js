@@ -2,29 +2,54 @@ const { displayMyHowdies } = require("./model/my-howdies.js");
 const { displayHowdies } = require("./model/howdies.js");
 const { validate, sanitise } = require("./cleaned")
 
-// Signup Html
 
-function signUpHtml(session, error={}) {
+// Error message object
+const errorMsg = {
+  email : "Please enter your email",
+  password: "Please enter a password",
+  username:"Please enter your username"
+};
+
+
+function checkForErrors(input){
+  
+  let errors = {};
+  const keys = Object.keys(input);
+
+  // iterate over object
+  keys.forEach((key, index) => {
+      if(!input[key]){
+        errors[key] = errorMsg[key];
+      }
+  });
+
+  return errors;
+}
+
+// Signup Html
+function signUpHtml(session, error={}, formInputs={username:"", email:""}) {
   const navBar = NavBar(session)
   const title = "Sign up to Howdie";
+
   content = /*html*/ `
     <div class="signup_container">
     <h2>${title}</h2>
     <form method="POST">
     <div>
     <label for="username">Username: </label>
-        <input id="username" name="username" type="text">
-        ${validate(error.username)}
+        <input id="username" name="username" type="text" value=${formInputs.username}>
+        <p>${validate(error.username)}</p>
+        
         </div>
         <div>
         <label for="email">Email: </label>
-        <input id="email" name="email" type="email">
-        ${validate(error.email)}
+        <input id="email" name="email" type="email" value=${formInputs.email}>
+        <p>${validate(error.email)}</p>
         </div>
         <div>
         <label for="password">Password:</label>
         <input id="password" name="password" type="password">
-        ${validate(error.password)}
+        <p>${validate(error.password)}</p>
         </div>
         <div class="signup-btn"> 
         <button type="submit">Signup</button>
@@ -154,12 +179,12 @@ function signInHtml(session, error={}) {
         <div>
         <label for="email">Your email</label>
         <input id="email" name="email" type="email">
-        ${validate(error.email)}
+        <p>${validate(error.email)}</p>
         </div>
         <div>
         <label for="password">Your password</label>
         <input id="password" name="password" type="password">
-        ${validate(error.password)}
+        <p>${validate(error.password)}</p>
         </div>
         <div class="signin-btn">
         <button type="submit">Login</button>
@@ -182,7 +207,12 @@ function signUpFailed(title) {
   return Layout({ title, content, navBar: "" });
 }
 
-function myHowdiesHtml(user_id, session, error={}) {
+function sanitise(input) {
+  return input.replaceAll("<", "&lt")
+}
+
+function myHowdiesHtml(user_id, session, error={}, formInputs={title:"", content:""}) {
+
   const navBar = NavBar(session);
 
   const title = "My Howdies Page";
@@ -192,19 +222,19 @@ function myHowdiesHtml(user_id, session, error={}) {
     <form method="POST" enctype="multipart/form-data">
       <div>
       <label for="title">How to</label>
-      <input type="text" name="title" id="title">
-      ${validate(error.title)}
+      <input type="text" name="title" id="title" value=${formInputs.title}>
+      <p>${validate(error.title)}</p>
       </div>
       
       <div class="text_area">
         <label for="content">Instructions</label>
-        <textarea name="content" id="content" cols="30" rows="10"></textarea>
-        ${validate(error.content)}
+        <textarea name="content" id="content" cols="30" rows="10">${formInputs.content}</textarea>
+        <p>${validate(error.content)}</p>
        </div>
        <div>
       <label for="image">Upload an image</label>
       <input type="file" id="image" name="image">
-      ${validate(error.image)}
+      <p>${validate(error.image)}</p>
     </div>
     <div class="post-btn">
       <button type="submit">Post</button>
@@ -254,5 +284,6 @@ module.exports = {
   signUpFailed,
   myHowdiesHtml,
   NavBar,
-  sanitise
+  sanitise,
+  checkForErrors
 };

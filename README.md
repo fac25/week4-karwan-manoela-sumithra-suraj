@@ -15,7 +15,7 @@ Make sure you have Git and Node (v18) installed.
 1. Clone this repo and `cd` into the directory
 2. Run `npm install` to install all the dependencies
 3. Run `npm run dev` to start the server.  
-4. run `npm run devWindow` to start the server in Windows.
+4. Run `npm run devWindow` to start the server in Windows.
    
 This uses the `nodemon` library to auto-restart the server when you save changes. 
 

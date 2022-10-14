@@ -1,4 +1,4 @@
-const { getSession } = require("../model/sessions");
+const { getSession } = require("./model/sessions");
 
 function session(req, res, next) {
   const session_id = req.signedCookies.sid;

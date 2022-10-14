@@ -15,7 +15,7 @@ function post(req, res) {
     let errors = checkForErrors({email, password});
     
     if((Object.keys(errors).length > 0)){
-        return res.status(400).send(signInHtml(req.session, error));
+        return res.status(400).send(signInHtml(req.session, errors));
     }
     
     const user = getUserByEmail(email); //returns an user object

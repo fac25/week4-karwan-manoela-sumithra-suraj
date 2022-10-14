@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const upload = multer({ dest: "./public/images/" });
-const {session}   = require("./routes/auth");
+const {session}   = require("./auth");
 
 const server = express();
 
